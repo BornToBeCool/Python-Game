@@ -13,6 +13,6 @@ def  runGame():
         print(" ")
         game.printHeroes()
         game.calculate_and_apply_damages()
-        time.sleep(2)
+        time.sleep(1)
 
     
