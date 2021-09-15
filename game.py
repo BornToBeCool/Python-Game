@@ -23,8 +23,8 @@ class Game:
         heroes_list_str_striped = []
         for heroe_list in heroes_list_str:
             heroe_striped = []
-            for i in heroe_list:
-                element = i.strip()
+            for heroe in heroe_list:
+                element = heroe.strip()
                 heroe_striped.append(element)
             heroes_list_str_striped.append(heroe_striped)
             
@@ -121,13 +121,10 @@ class Game:
         teamA.increase_level_heal_lowest_health_heroe()
         teamB.increase_level_heal_lowest_health_heroe()
 
-
     #calculate and applydamage one team to the other
     def calculate_damages(self, teamA , teamB, x):
         team_damages = []
         
-
-
         for heroe in teamA.alive_heroes:
             if heroe.set_status() == "OK":
                 heroe_damage_amount = heroe.heal_or_damage_or_stun()
@@ -146,11 +143,8 @@ class Game:
             else:
                 heroe.status -= 1     
         self.show_damages(team_damages,x)       
-        teamA.check_heroes_health()
-        teamB.check_heroes_health()
-        
-        
-        
+        teamA.add_and_remove_heroes_from_list()
+        teamB.add_and_remove_heroes_from_list()  
 
     #print non stunned heroes damages
     def show_damages(self, my_list, team):
@@ -160,7 +154,6 @@ class Game:
             print(i)
         print(" ")
  
-    
     #print heroes name, max_health, level and status  
     def printHeroes(self,):
         for team in self.teams:
@@ -177,29 +170,8 @@ class Game:
                 print(heroe.set_status())
             print(" ")
             print(" ")
-
-            
+       
     #increase self.round by 1
     def game_round(self,):
         self.round += 1
         return self.round
-        
-
-            
-            
-
-           
-            
-        
-        
-        
-
-        
-        
-        
-               
-            
-            
-
-        
-        

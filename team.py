@@ -5,8 +5,6 @@ class Team:
         self.alive_heroes = team #alive heroes in a list
         self.dead_heroes = [ ]  #dead heroes in a list
        
-        
-
     # select a random heroe and apply damage to him
     def damage_heroe_taken(self, amount):
         random_heroe = random.choice(self.alive_heroes)
@@ -32,10 +30,6 @@ class Team:
         random_heroe = random.choice(self.alive_heroes)
         return random_heroe.name
         
-    #checking if any heroe is dead
-    def check_heroes_health(self,):
-        self.add_and_remove_heroes_from_list()
-
     #checking if any heroe is dead, place him to the dead list and delete him from the alive heroes
     def add_and_remove_heroes_from_list(self,):
         i = 0
@@ -49,27 +43,10 @@ class Team:
     #checking the lowest health heroe from the team, apply heal to him and increase level by 1       
     def increase_level_heal_lowest_health_heroe(self,):
         if len(self.alive_heroes) > 0:
-            lowest_health = self.alive_heroes[0]
+            hero_with_lowest_health = self.alive_heroes[0]
             for heroe in self.alive_heroes:
-                if heroe.current_health < lowest_health.current_health:
-                    lowest_health = heroe
-            lowest_health.level += 1
-            lowest_health.current_health += (random.randint(5, 10)/100) * lowest_health.max_health
+                if heroe.current_health < hero_with_lowest_health.current_health:
+                    hero_with_lowest_health = heroe
+            hero_with_lowest_health.level += 1
+            hero_with_lowest_health.current_health += (random.randint(5, 10)/100) * hero_with_lowest_health.max_health
         
-
- 
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
