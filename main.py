@@ -6,7 +6,7 @@ def main():
     while (True):
         if (len(game.teams[0].alive_heroes) == 0 or len(game.teams[1].alive_heroes) == 0):
             break
-        print("Round " + str(game.game_round()))
+        print("Round " + str(game.increase_game_round()))
         print("---------------------------------------")
         print(" ")
         game.printHeroes()

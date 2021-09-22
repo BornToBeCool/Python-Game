@@ -76,16 +76,16 @@ class Game:
         
     #asking from the user to pick heroes then create them and the place them into teams. team1 first then team2
     def AP_mode(self,):
-        random_heroes = self.random_heroes()
+        random_heroes = self.random_heroes()  # random_heroes holds 10 random heroes from CSV file
         list_heroe_names = []
-        for i in random_heroes:
-            list_heroe_names.append(i[0])
+        for i in random_heroes: 
+            list_heroe_names.append(i[0])   # append only the name of the heroe into list_heroe_names
             
-        numeric_list_heroe_names = []
+        numeric_list_heroe_names = []       # holds the number and the name for each heroe for example (1 nevermore, 2 luna)
         counter = 1
         numeric_list_heroe_names.append("Type: ")
-        for i in list_heroe_names:
-            numeric_heroe = str(counter) + " for " + i
+        for name in list_heroe_names:
+            numeric_heroe = str(counter) + " for " + name
             numeric_list_heroe_names.append(numeric_heroe)
             counter += 1
         print("AP mode selected: \n")
@@ -97,9 +97,10 @@ class Game:
         counter = 0
         while counter < 10:
             user_choice = int(input("Select one of the above heroes: \n"))
-            if user_choice < 1 or user_choice > 10:
+            while user_choice < 1 or user_choice > 10:
                 print("You have not selected the right number. Try again: \n")
-                user_choice = int(input("Select one of the above heroes: "))
+                user_choice = int(input("Select one of the above heroes: \n"))
+
             if len(teamA) < 5:
                 teamA.append(Heroes(random_heroes[user_choice - 1]))
             else:
@@ -122,29 +123,29 @@ class Game:
         teamB.increase_level_heal_lowest_health_heroe()
 
     #calculate and applydamage one team to the other
-    def calculate_damages(self, teamA , teamB, x):
+    def calculate_damages(self, team1 , team2, ActiveTeam):
         team_damages = []
         
-        for heroe in teamA.alive_heroes:
+        for heroe in team1.alive_heroes:
             if heroe.set_status() == "OK":
                 heroe_damage_amount = heroe.heal_or_damage_or_stun()
                 if heroe_damage_amount[0] == "heal":
-                    nameA = teamA.heal_heroe(heroe_damage_amount[1])
+                    nameA = team1.heal_heroe(heroe_damage_amount[1])
                     team_damages.append(heroe.name + " - " + str( heroe_damage_amount[1]) + "  "  + str( heroe_damage_amount[0]) + "  --> " + nameA)
                 elif heroe_damage_amount[0] == "stun":
-                    nameA = teamB.stun_heroe_taken(heroe_damage_amount[1])
+                    nameA = team2.stun_heroe_taken(heroe_damage_amount[1])
                     team_damages.append(heroe.name + " - " + str( heroe_damage_amount[1]) + "  "  + str( heroe_damage_amount[0]) + "  --> " + nameA)
                 elif heroe_damage_amount[0] == "spell" or heroe_damage_amount[0] == "attack":
-                    nameA = teamB.damage_heroe_taken(heroe_damage_amount[1])
+                    nameA = team2.damage_heroe_taken(heroe_damage_amount[1])
                     team_damages.append(heroe.name + " - " + str( heroe_damage_amount[1]) + "  "  + str( heroe_damage_amount[0]) + "  --> " + nameA)
                 else: #heroe_damage_amount[0] == "none":
-                    nameA = teamB.miss(heroe_damage_amount[1])
+                    nameA = team2.miss(heroe_damage_amount[1])
                     team_damages.append(heroe.name + " - " + str( heroe_damage_amount[1]) + "  "  + str( heroe_damage_amount[0]) + "  --> " + nameA)
             else:
                 heroe.status -= 1     
-        self.show_damages(team_damages,x)       
-        teamA.add_and_remove_heroes_from_list()
-        teamB.add_and_remove_heroes_from_list()  
+        self.show_damages(team_damages,ActiveTeam)       
+        team1.add_and_remove_heroes_from_list()
+        team2.add_and_remove_heroes_from_list()  
 
     #print non stunned heroes damages
     def show_damages(self, my_list, team):
@@ -172,6 +173,6 @@ class Game:
             print(" ")
        
     #increase self.round by 1
-    def game_round(self,):
+    def increase_game_round(self,):
         self.round += 1
         return self.round
